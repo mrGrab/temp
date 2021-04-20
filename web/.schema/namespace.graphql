@@ -1,0 +1,172 @@
+"""
+Namespaced represents an object that belongs to a unique namespace.
+"""
+interface Namespaced {
+  "The namespace the object belongs to."
+  namespace: String!
+}
+
+"""
+Represents a virtual cluster
+"""
+type Namespace implements Node {
+  "The globally unique identifier of the check."
+  id: ID!
+
+  "Name is the unique identifier for a namespace."
+  name: String!
+
+  #
+  # NOTE:
+  #
+  # We could implement a different container that exposes the following fields.
+  # Eg. a "Scope" type or something of in that vein.
+  #
+
+  "All check configurations associated with the namespace."
+  checks(
+    offset: Int = 0,
+    "Limit adds optional limit to the number of entries returned."
+    limit: Int = 10,
+    "OrderBy adds optional order to the records retrieved."
+    orderBy: CheckListOrder = NAME_DESC
+    "DEPRECATED: Please use the filters argument instead."
+    filter: String = "",
+    """
+    Filters reduces the set using given arbitrary expression[s]; expressions
+    take on the form KEY: VALUE. The accepted key(s) are: subscription &
+    published.
+
+    Eg.
+
+    subscription:unix
+    published:true
+    """
+    filters: [String!] = [],
+  ): CheckConfigConnection!
+
+  "All entities associated with the namespace."
+  entities(
+    offset: Int = 0,
+    "Limit adds optional limit to the number of entries returned."
+    limit: Int = 10,
+    "OrderBy adds optional order to the records retrieved."
+    orderBy: EntityListOrder = ID_DESC
+    "DEPRECATED: Please use the filters argument instead."
+    filter: String = "",
+    """
+    Filters reduces the set using given arbitrary expression[s]; expressions
+    take on the form KEY: VALUE. The accepted key(s) are: subscription &
+    class.
+
+    Eg.
+
+    subscription:unix
+    class:proxy
+    """
+    filters: [String!] = [],
+  ): EntityConnection!
+
+  "All events associated with the namespace."
+  events(
+    offset: Int = 0,
+    "Limit adds optional limit to the number of entries returned."
+    limit: Int = 10,
+    "OrderBy adds optional order to the records retrieved."
+    orderBy: EventsListOrder = SEVERITY
+    "DEPRECATED: Please use the filters argument instead."
+    filter: String = "",
+    """
+    Filters reduces the set using given arbitrary expression[s]; expressions
+    take on the form KEY: VALUE. The accepted key(s) are: status, check, entity,
+    & silenced.
+
+    Eg.
+
+    status:passing
+    status:warning
+    status:incident
+    check:check-disk
+    entity:venice
+    silenced:true
+    """
+    filters: [String!] = [],
+  ): EventConnection!
+
+  "All filters associated with the namespace."
+  eventFilters(
+    offset: Int = 0,
+    "Limit adds optional limit to the number of entries returned."
+    limit: Int = 10,
+    "OrderBy adds optional order to the records retrieved."
+    orderBy: EventFilterListOrder = NAME_DESC,
+    """
+    Filters reduces the set using given arbitrary expression[s]; expressions
+    take on the form KEY: VALUE. The accepted key(s) are: action
+
+    Eg.
+
+    action:allow
+    action:deny
+    """
+    filters: [String!] = [],
+  ): EventFilterConnection!
+
+  "All handlers associated with the namespace."
+  handlers(
+    offset: Int = 0,
+    "Limit adds an optional limit to the number of handlers returned."
+    limit: Int = 10,
+    "Orderby adds an optional order to the records retrieved."
+    orderBy: HandlerListOrder = NAME_DESC,
+    "DEPRECATED: Please use the filters argument instead."
+    filter: String = "",
+    """
+    Filters reduces the set using given arbitrary expression[s]; expressions
+    take on the form KEY: VALUE. The accepted key(s) are: type.
+
+    Eg.
+
+    type:pipe
+    type:tcp
+    type:udp
+    type:set
+    """
+    filters: [String!] = [],
+  ): HandlerConnection!
+
+  "All mutators associated with the namespace."
+  mutators(
+    offset: Int = 0,
+    "Limit adds an optional limit to the number of records returned."
+    limit: Int = 10,
+    "Orderby adds an optional order to the records retrieved."
+    orderBy: MutatorListOrder = NAME_DESC,
+    """
+    Filters reduces the set using given arbitrary expression[s]; expressions
+    take on the form KEY: VALUE.
+    """
+    filters: [String!] = [],
+  ): MutatorConnection!
+
+  "All silences associated with the namespace."
+  silences(
+    offset: Int = 0
+    "Limit adds optional limit to the number of entries returned."
+    limit: Int = 10
+    "OrderBy adds optional order to the records retrieved."
+    orderBy: SilencesListOrder = ID_DESC
+    "DEPRECATED: Please use the filters argument instead."
+    filter: String = "",
+    """
+    Filters reduces the set using given arbitrary expression[s]; expressions
+    take on the form KEY: VALUE. The accepted key(s) are: check & subscription.
+
+    Eg.
+
+    check:check-disk
+    subscription:unix
+    """
+    filters: [String!] = [],
+  ): SilencedConnection!
+}
