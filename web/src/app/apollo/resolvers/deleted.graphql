@@ -1,0 +1,34 @@
+extend type CheckConfig {
+  "Describes whether the check has been deleted from the system"
+  deleted: Boolean!
+}
+
+extend type Entity {
+  "Describes whether the entity has been deleted from the system"
+  deleted: Boolean!
+}
+
+extend type Event {
+  "Describes whether the event has been deleted from the system"
+  deleted: Boolean!
+}
+
+extend type EventFilter {
+  "Describes whether the EventFilter has been deleted from the system"
+  deleted: Boolean!
+}
+
+extend type Handler {
+  "Describes whether the handler has been deleted from the system"
+  deleted: Boolean!
+}
+
+extend type Mutator {
+  "Describes whether the mutator has been deleted from the system"
+  deleted: Boolean!
+}
+
+extend type Silenced {
+  "Describes whether the entry has been deleted from the system"
+  deleted: Boolean!
+}
